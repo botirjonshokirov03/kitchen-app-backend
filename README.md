@@ -1,11 +1,3 @@
-Perfect – now that your backend is fully working,  
-let’s write a **professional README.md** 📄  
-(so anyone can install, run, and understand your Oshxona Boshqaruv Tizimi project)
-
-Here’s the full clean version ready to paste:
-
----
-
 # Kitchen App - Backend
 
 > Multi-tenant kitchen management backend system built with Node.js, Express, MongoDB.

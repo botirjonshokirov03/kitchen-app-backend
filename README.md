@@ -1,52 +1,63 @@
 # Kitchen App - Backend
 
-> Multi-tenant kitchen management backend system built with Node.js, Express, MongoDB.
+> Multi-tenant kitchen and restaurant management backend system built with Node.js, Express, MongoDB.
 
 ---
 
-## Project Features
+## 📚 Project Features
 
-- SuperAdmin can create Kitchens and Admins.
-- Each Kitchen has its own **separate MongoDB database**.
-- Admins can:
+- **SuperAdmin** can create Kitchens and Admins.
+- Each **Kitchen** has its own **separate MongoDB database** dynamically.
+- **Admins** can:
+  - Login securely
+  - Create and manage Categories
+  - Create and manage Products
+  - Create and manage Workers (Cashiers, Waiters)
+  - Create and manage Tables
+  - Calculate Worker working hours for salary tracking
+- **Cashiers** (workers) can:
   - Login
-  - Manage Categories
-  - Manage Products inside their own kitchen.
-- Dynamic database connection based on Admin login.
-- Secure JWT authentication for SuperAdmin and Admins.
+  - Check-In / Check-Out (working hours)
+  - View Categories and Products
+  - Take Orders (select table, waiter, add items)
+- **Waiters** (workers) can:
+  - Check-In / Check-Out
+- Full JWT authentication for all users (SuperAdmin, Admin, Workers).
+- Dynamic database connection middleware based on the Kitchen ID.
 
 ---
 
-## Technologies Used
+## 🛠 Technologies Used
 
 - Node.js (Express.js)
 - MongoDB (Local or Atlas)
-- Mongoose (ODM)
+- Mongoose (ODM for MongoDB)
 - bcryptjs (Password hashing)
 - jsonwebtoken (JWT Authentication)
-- dotenv (Environment configuration)
-- multer (for future image uploads)
+- dotenv (Environment variables)
+- multer (Image uploads — for future)
+- cors (Cross-Origin Resource Sharing)
 
 ---
 
-## Project Structure
+## 📁 Project Structure
 
 ```
 src/
-├── config/            # Database connection and dynamic DB logic
-├── controllers/       # SuperAdmin and Admin controllers
-├── models/            # Mongoose schemas (SuperAdmin + Admin models)
-├── middlewares/       # JWT and dynamic DB connection middleware
-├── routes/            # API route definitions
-├── utils/             # Utility functions (token generation)
-├── app.js             # Express server setup
-.env                   # Environment variables
+├── config/            # Dynamic Database connection logic
+├── controllers/       # SuperAdmin, Admin, Worker Controllers
+├── models/            # Mongoose Schemas (SuperAdmin, Admin, Workers, Products, Tables, Orders)
+├── middlewares/       # Authentication and Dynamic DB middleware
+├── routes/            # Route definitions (SuperAdmin, Admin, WorkTrack, Worker)
+├── utils/             # Helper functions (Token generation, etc)
+├── app.js             # Express app entry point
+.env                   # Environment Variables
 package.json           # Project manifest
 ```
 
 ---
 
-## Installation and Setup
+## ⚙️ Installation and Setup
 
 ### 1. Clone the repository
 
@@ -67,19 +78,17 @@ npm install
 
 ### 3. Setup environment variables
 
-Create a `.env` file in the root directory:
+Create a `.env` file:
 
 ```dotenv
 PORT=5000
 MONGO_URI=mongodb://127.0.0.1:27017/superadmin_db
-JWT_SECRET=your_jwt_secret_key
+JWT_SECRET=your_super_secret_key
 ```
 
 ---
 
-### 4. Run MongoDB locally
-
-If you installed MongoDB manually:
+### 4. Start MongoDB locally
 
 ```bash
 mongod --dbpath /Users/<your-username>/data/db
@@ -108,43 +117,62 @@ http://localhost:5000
 
 ---
 
-## API Endpoints
+## 🚀 API Endpoints
 
 ### SuperAdmin APIs:
 
-| Method | Endpoint                   | Description                |
-| :----- | :------------------------- | :------------------------- |
-| POST   | `/api/superadmin/login`    | SuperAdmin login           |
-| POST   | `/api/superadmin/kitchens` | Create a new Kitchen       |
-| GET    | `/api/superadmin/kitchens` | Get all Kitchens           |
-| POST   | `/api/superadmin/admins`   | Create Admin for a Kitchen |
-| GET    | `/api/superadmin/admins`   | Get all Admins             |
+| Method | Endpoint                   | Description              |
+| :----- | :------------------------- | :----------------------- |
+| POST   | `/api/superadmin/login`    | SuperAdmin login         |
+| POST   | `/api/superadmin/kitchens` | Create a new Kitchen     |
+| GET    | `/api/superadmin/kitchens` | List all Kitchens        |
+| POST   | `/api/superadmin/admins`   | Create Admin for Kitchen |
+| GET    | `/api/superadmin/admins`   | List all Admins          |
 
 ---
 
 ### Admin APIs:
 
-| Method | Endpoint                                     | Description                        |
-| :----- | :------------------------------------------- | :--------------------------------- |
-| POST   | `/api/admin/login`                           | Admin login                        |
-| POST   | `/api/admin/categories`                      | Create Category                    |
-| GET    | `/api/admin/categories`                      | Get Categories                     |
-| POST   | `/api/admin/products`                        | Create Product                     |
-| GET    | `/api/admin/products`                        | Get Products                       |
-| GET    | `/api/admin/categories/:categoryId/products` | Get Products for specific Category |
+| Method | Endpoint                                     | Description                          |
+| :----- | :------------------------------------------- | :----------------------------------- |
+| POST   | `/api/admin/login`                           | Admin login                          |
+| POST   | `/api/admin/categories`                      | Create Category                      |
+| GET    | `/api/admin/categories`                      | Get Categories                       |
+| POST   | `/api/admin/products`                        | Create Product                       |
+| GET    | `/api/admin/products`                        | Get Products                         |
+| POST   | `/api/admin/workers`                         | Create Worker (Waiter/Cashier)       |
+| GET    | `/api/admin/workers`                         | Get all Workers                      |
+| POST   | `/api/admin/tables`                          | Create Table                         |
+| GET    | `/api/admin/tables`                          | Get all Tables                       |
+| GET    | `/api/admin/workers/:username/working-hours` | Get monthly working hours for Worker |
 
 ---
 
-## Future Improvements
+### Worker (Waiter/Cashier) APIs:
 
-- Image uploads for Products (using multer)
-- Admin password reset system
-- Pagination and search for products/categories
-- Deployment to cloud servers (Render, Railway, VPS)
+| Method | Endpoint               | Description                      |
+| :----- | :--------------------- | :------------------------------- |
+| POST   | `/api/worker/login`    | Worker login (username/password) |
+| POST   | `/api/worker/checkin`  | Worker Check-In                  |
+| POST   | `/api/worker/checkout` | Worker Check-Out                 |
+| POST   | `/api/worker/orders`   | Create new Order (assign Waiter) |
+| GET    | `/api/worker/orders`   | List all Orders                  |
 
 ---
 
-## Developed by
+## 📈 Future Improvements
+
+- Worker Dashboard: My Profile, My Orders
+- Salary Calculation System (automatic based on hours × rate)
+- Attendance Reporting (export to CSV / Excel)
+- Image uploads for Products
+- Pagination and filtering for big kitchens
+- Deployment to Render, Railway or VPS hosting
+- Real-time WebSocket notification for order updates (future)
+
+---
+
+## 👨‍💻 Developed by
 
 > Botirjon Shokirov
 

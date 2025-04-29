@@ -6,6 +6,8 @@ const { generateToken } = require("../utils/generateToken");
 let Category;
 let Product;
 let AdminModel;
+let Worker;
+let Table;
 
 const loginAdmin = async (req, res) => {
   const { email, password } = req.body;
@@ -87,6 +89,105 @@ const getCategoryProducts = async (req, res) => {
   res.json(products);
 };
 
+const createWorker = async (req, res) => {
+  try {
+    Worker = req.kitchenDb.model("Worker");
+
+    const { name, role, username, password } = req.body;
+
+    if (!name || !role || !username || !password) {
+      return res.status(400).json({ message: "All fields are required" });
+    }
+
+    const existing = await Worker.findOne({ username });
+    if (existing) {
+      return res.status(400).json({ message: "Username already exists" });
+    }
+
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+    const newWorker = new Worker({
+      name,
+      role,
+      username,
+      password: hashedPassword,
+    });
+
+    const savedWorker = await newWorker.save(); // ✅ explicitly save it
+
+    res.status(201).json(savedWorker);
+  } catch (err) {
+    console.error("Worker creation error:", err.message);
+    res.status(500).json({ message: "Failed to create worker" });
+  }
+};
+
+const getWorkers = async (req, res) => {
+  Worker = req.kitchenDb.model("Worker");
+  const workers = await Worker.find();
+  res.json(workers);
+};
+
+const createTable = async (req, res) => {
+  Table = req.kitchenDb.model("Table");
+  const { number, capacity } = req.body;
+
+  if (!number || !capacity) {
+    return res
+      .status(400)
+      .json({ message: "Number and capacity are required" });
+  }
+
+  const table = await Table.create({ number, capacity });
+  res.status(201).json(table);
+};
+
+const getTables = async (req, res) => {
+  Table = req.kitchenDb.model("Table");
+  const tables = await Table.find();
+  res.json(tables);
+};
+
+const calculateWorkingHours = async (req, res) => {
+  Worker = req.kitchenDb.model("Worker");
+  const { username } = req.params;
+
+  const worker = await Worker.findOne({ username });
+  if (!worker) {
+    return res.status(404).json({ message: "Worker not found" });
+  }
+
+  let totalMinutes = 0;
+  const currentMonth = new Date().getMonth();
+  const currentYear = new Date().getFullYear();
+
+  for (const check of worker.checkIns) {
+    if (check.checkInTime && check.checkOutTime) {
+      const checkInDate = new Date(check.checkInTime);
+      const checkOutDate = new Date(check.checkOutTime);
+
+      if (
+        checkInDate.getMonth() === currentMonth &&
+        checkInDate.getFullYear() === currentYear
+      ) {
+        const diffMs = checkOutDate - checkInDate;
+        totalMinutes += Math.floor(diffMs / (1000 * 60));
+      }
+    }
+  }
+
+  const totalHours = (totalMinutes / 60).toFixed(2);
+
+  res.json({
+    username: worker.username,
+    name: worker.name,
+    month: currentMonth + 1, // because JS months are 0-11
+    totalHours,
+    totalMinutes,
+    workSessions: worker.checkIns.length,
+  });
+};
+
 module.exports = {
   loginAdmin,
   createCategory,
@@ -94,4 +195,9 @@ module.exports = {
   createProduct,
   getProducts,
   getCategoryProducts,
+  createWorker,
+  getWorkers,
+  createTable,
+  getTables,
+  calculateWorkingHours,
 };

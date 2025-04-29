@@ -62,7 +62,7 @@ package.json           # Project manifest
 ### 1. Clone the repository
 
 ```bash
-git clone <your-repo-link>
+git clone git@github.com:botirjonshokirov03/kitchen-app-backend.git
 cd kitchen-app-backend
 ```
 

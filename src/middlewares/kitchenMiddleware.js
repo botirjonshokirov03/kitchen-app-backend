@@ -2,16 +2,22 @@ const { getKitchenDbConnection } = require("../config/dynamicConnection");
 
 const kitchenDbMiddleware = async (req, res, next) => {
   try {
-    const kitchenId = req.user.kitchenId;
+    let kitchenId;
 
-    if (!kitchenId) {
-      return res.status(400).json({ message: "Kitchen ID not found in token" });
+    if (req.user && req.user.kitchenId) {
+      // If token exists (Admin / SuperAdmin logged in)
+      kitchenId = req.user.kitchenId;
+    } else if (req.body.kitchenId) {
+      // If no token (Worker login) — accept kitchenId from request body
+      kitchenId = req.body.kitchenId;
+    } else {
+      return res
+        .status(400)
+        .json({ message: "Kitchen ID not found in token or body" });
     }
 
-    // Get or create a dynamic connection for this kitchen
     const kitchenDb = await getKitchenDbConnection(kitchenId);
 
-    // Attach it to request
     req.kitchenDb = kitchenDb;
 
     next();

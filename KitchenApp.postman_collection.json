@@ -84,7 +84,8 @@
 					},
 					"response": []
 				}
-			]
+			],
+			"description": "Boss admin who will create Kitchens, and admins for the Kitchens."
 		},
 		{
 			"name": "Auth",
@@ -142,6 +143,33 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "workerLogin",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"username\": \"shokirov\",\n  \"password\": \"123456\",\n  \"kitchenId\": \"680f3d3fa438ba9bbd427df6\"\n}\n\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/worker/login",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"worker",
+								"login"
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		},
@@ -149,14 +177,343 @@
 			"name": "Admin",
 			"item": [
 				{
-					"name": "createCategory",
+					"name": "Tables",
+					"item": [
+						{
+							"name": "createTable",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token_admin}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"number\": 5,\n  \"capacity\": 8\n}\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/admin/tables",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"admin",
+										"tables"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "getTables",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token_admin}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/admin/tables",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"admin",
+										"tables"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Categories",
+					"item": [
+						{
+							"name": "createCategory",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token_admin}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"name\": \"Ovqatlar\"\n}\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}admin/categories",
+									"host": [
+										"{{base_url}}admin"
+									],
+									"path": [
+										"categories"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "getAllCategories",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token_admin}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/admin/categories",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"admin",
+										"categories"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "getCategoryProducts",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token_admin}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/admin/categories/680f3d8aa438ba9bbd427dff/products",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"admin",
+										"categories",
+										"680f3d8aa438ba9bbd427dff",
+										"products"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Workers",
+					"item": [
+						{
+							"name": "createWorker",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token_admin}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"name\": \"Ali Waiter\",\n  \"role\": \"waiter\",\n  \"username\": \"aliwaiter\",\n  \"password\": \"123456\"\n}\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/admin/workers",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"admin",
+										"workers"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "getWorkers",
+							"request": {
+								"method": "GET",
+								"header": []
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Products",
+					"item": [
+						{
+							"name": "createProducts",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token_admin}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"name\": \"Hot Dog\",\n  \"price\": 10,\n  \"description\": \"1 litrli sovuq ichimlik\",\n  \"categoryId\": \"680f3e38a438ba9bbd427e16\"\n}\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/admin/products",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"admin",
+										"products"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "getAllProducts",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token_admin}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/admin/products",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"admin",
+										"products"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "MonthlyCalculations",
+					"item": [
+						{
+							"name": "getMonthlyWorkHours",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token_admin}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/admin/workers/shokirov/working-hours",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"admin",
+										"workers",
+										"shokirov",
+										"working-hours"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Cashier",
+			"item": [
+				{
+					"name": "createOrder",
 					"request": {
 						"auth": {
 							"type": "bearer",
 							"bearer": [
 								{
 									"key": "token",
-									"value": "{{token_admin}}",
+									"value": "{{token_worker}}",
 									"type": "string"
 								}
 							]
@@ -165,7 +522,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"name\": \"Ovqatlar\"\n}\n",
+							"raw": "{\n  \"tableNumber\": 2,\n  \"waiterId\": \"680f68155cb4f0267476d66c\",\n  \"items\": [\n    {\n      \"productName\": \"Cola 1L\",\n      \"price\": 10,\n      \"quantity\": 2\n    }\n  ],\n  \"kitchenName\": \"Botirjon Oshxonasi\",\n  \"serviceFee\": 5,\n  \"discount\": 2\n}\n",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -173,63 +530,27 @@
 							}
 						},
 						"url": {
-							"raw": "{{base_url}}admin/categories",
-							"host": [
-								"{{base_url}}admin"
-							],
-							"path": [
-								"categories"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "createProducts",
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "{{token_admin}}",
-									"type": "string"
-								}
-							]
-						},
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n  \"name\": \"Hot Dog\",\n  \"price\": 10,\n  \"description\": \"1 litrli sovuq ichimlik\",\n  \"categoryId\": \"680f3e38a438ba9bbd427e16\"\n}\n",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{base_url}}/admin/products",
+							"raw": "{{base_url}}/worker/orders",
 							"host": [
 								"{{base_url}}"
 							],
 							"path": [
-								"admin",
-								"products"
+								"worker",
+								"orders"
 							]
 						}
 					},
 					"response": []
 				},
 				{
-					"name": "getAllCategories",
+					"name": "getOrders",
 					"request": {
 						"auth": {
 							"type": "bearer",
 							"bearer": [
 								{
 									"key": "token",
-									"value": "{{token_admin}}",
+									"value": "{{token_worker}}",
 									"type": "string"
 								}
 							]
@@ -237,27 +558,27 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{base_url}}/admin/categories",
+							"raw": "{{base_url}}/worker/orders",
 							"host": [
 								"{{base_url}}"
 							],
 							"path": [
-								"admin",
-								"categories"
+								"worker",
+								"orders"
 							]
 						}
 					},
 					"response": []
 				},
 				{
-					"name": "getAllProducts",
+					"name": "getTables",
 					"request": {
 						"auth": {
 							"type": "bearer",
 							"bearer": [
 								{
 									"key": "token",
-									"value": "{{token_admin}}",
+									"value": "{{token_worker}}",
 									"type": "string"
 								}
 							]
@@ -265,13 +586,41 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{base_url}}/admin/products",
+							"raw": "{{base_url}}/worker/tables",
 							"host": [
 								"{{base_url}}"
 							],
 							"path": [
-								"admin",
-								"products"
+								"worker",
+								"tables"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getCategories",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token_worker}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/worker/categories",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"worker",
+								"categories"
 							]
 						}
 					},
@@ -285,7 +634,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "{{token_admin}}",
+									"value": "{{token_worker}}",
 									"type": "string"
 								}
 							]
@@ -293,15 +642,74 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{base_url}}/admin/categories/680f3d8aa438ba9bbd427dff/products",
+							"raw": "{{base_url}}/worker/categories/680f3d8aa438ba9bbd427dff/products",
 							"host": [
 								"{{base_url}}"
 							],
 							"path": [
-								"admin",
+								"worker",
 								"categories",
 								"680f3d8aa438ba9bbd427dff",
 								"products"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "CheckIn - CheckOut",
+			"item": [
+				{
+					"name": "CheckIn",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"username\": \"shokirov\",\n  \"kitchenId\": \"680f3d3fa438ba9bbd427df6\"\n}\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/workTrack/checkin",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"workTrack",
+								"checkin"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "CheckOut",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"username\": \"shokirov\",\n  \"kitchenId\": \"680f3d3fa438ba9bbd427df6\"\n}\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/workTrack/checkout",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"workTrack",
+								"checkout"
 							]
 						}
 					},
@@ -345,7 +753,12 @@
 		},
 		{
 			"key": "token_admin",
-			"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiYWRtaW4iLCJraXRjaGVuSWQiOiI2ODBmM2QzZmE0MzhiYTliYmQ0MjdkZjYiLCJhZG1pbklkIjoiNjgwZjNkNTNhNDM4YmE5YmJkNDI3ZGZhIiwiaWF0IjoxNzQ1ODI5NDc5LCJleHAiOjE3NDY0MzQyNzl9.O9WWQcBga6zpUzMrqdrYAIPNrzw2XsFeEemMCm7LaYs",
+			"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiYWRtaW4iLCJraXRjaGVuSWQiOiI2ODBmM2QzZmE0MzhiYTliYmQ0MjdkZjYiLCJhZG1pbklkIjoiNjgwZjNkNTNhNDM4YmE5YmJkNDI3ZGZhIiwiaWF0IjoxNzQ1OTAxNjIwLCJleHAiOjE3NDY1MDY0MjB9.lC2vxJ-pOFoFAPpDMpH6D6QZwtrh9vUTJK29V9Nrzss",
+			"type": "string"
+		},
+		{
+			"key": "token_worker",
+			"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4MTA1YjRkMDk0ZjZhNzhlMDI3ZGU0NyIsInJvbGUiOiJjYXNoaWVyIiwidXNlcm5hbWUiOiJzaG9raXJvdiIsImtpdGNoZW5JZCI6IjY4MGYzZDNmYTQzOGJhOWJiZDQyN2RmNiIsImlhdCI6MTc0NTkwMjU5MywiZXhwIjoxNzQ2NTA3MzkzfQ.oI-C_SHjHoDNVTyU0sIoO1MbOuq0OdG1H5t3ePnHDAc",
 			"type": "string"
 		}
 	]

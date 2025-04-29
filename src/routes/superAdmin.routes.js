@@ -1,13 +1,13 @@
-const express = require("express");
+import express from "express";
 const router = express.Router();
-const {
+import {
   loginSuperAdmin,
   createKitchen,
   createKitchenAdmin,
   getAllKitchens,
   getAllAdmins,
-} = require("../controllers/superAdmin.controller");
-const { protectSuperAdmin } = require("../middlewares/authMiddleware");
+} from "../controllers/superAdmin.controller.js";
+import { protectSuperAdmin } from "../middlewares/authMiddleware.js";
 
 router.post("/login", loginSuperAdmin);
 
@@ -17,4 +17,4 @@ router.get("/kitchens", protectSuperAdmin, getAllKitchens);
 router.post("/admins", protectSuperAdmin, createKitchenAdmin);
 router.get("/admins", protectSuperAdmin, getAllAdmins);
 
-module.exports = router;
+export default router;

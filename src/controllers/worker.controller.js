@@ -1,5 +1,5 @@
-const bcrypt = require("bcryptjs");
-const jwt = require("jsonwebtoken");
+import bcrypt from "bcryptjs";
+import jwt from "jsonwebtoken";
 
 let Order;
 let Table;
@@ -130,4 +130,4 @@ const checkOut = async (req, res) => {
   res.json({ message: "Check-Out successful", worker });
 };
 
-module.exports = { loginWorker, checkIn, checkOut, createOrder, getOrders };
+export { loginWorker, checkIn, checkOut, createOrder, getOrders };

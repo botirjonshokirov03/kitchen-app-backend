@@ -1,4 +1,4 @@
-const { getKitchenDbConnection } = require("../config/dynamicConnection");
+import { getKitchenDbConnection } from "../config/dynamicConnection.js";
 
 const kitchenDbMiddleware = async (req, res, next) => {
   try {
@@ -27,4 +27,4 @@ const kitchenDbMiddleware = async (req, res, next) => {
   }
 };
 
-module.exports = { kitchenDbMiddleware };
+export { kitchenDbMiddleware };

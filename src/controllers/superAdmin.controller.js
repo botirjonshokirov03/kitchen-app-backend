@@ -1,9 +1,7 @@
-const bcrypt = require("bcryptjs");
-const jwt = require("jsonwebtoken");
-const Kitchen = require("../models/SuperAdmin/Kitchen");
-const Admin = require("../models/SuperAdmin/Admin");
-const mongoose = require("mongoose");
-const { generateToken } = require("../utils/generateToken");
+import bcrypt from "bcryptjs";
+import Kitchen from "../models/SuperAdmin/Kitchen.js";
+import Admin from "../models/SuperAdmin/Admin.js";
+import { generateToken } from "../utils/generateToken.js";
 
 // Hardcoded SuperAdmin (for simplicity)
 const SUPERADMIN_EMAIL = "superadmin@gmail.com";
@@ -67,7 +65,7 @@ const getAllAdmins = async (req, res) => {
   res.json(admins);
 };
 
-module.exports = {
+export {
   loginSuperAdmin,
   createKitchen,
   getAllKitchens,

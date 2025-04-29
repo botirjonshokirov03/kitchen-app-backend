@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+import mongoose from "mongoose";
 
 const CategorySchema = new mongoose.Schema(
   {
@@ -10,4 +10,4 @@ const CategorySchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-module.exports = CategorySchema;
+export default CategorySchema;

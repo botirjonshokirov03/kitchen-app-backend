@@ -1,17 +1,17 @@
-const express = require("express");
+import express from "express";
 const router = express.Router();
-const { protectWorker } = require("../middlewares/authMiddleware");
-const { kitchenDbMiddleware } = require("../middlewares/kitchenMiddleware");
-const {
+import { protectWorker } from "../middlewares/authMiddleware.js";
+import { kitchenDbMiddleware } from "../middlewares/kitchenMiddleware.js";
+import {
   getTables,
   getCategories,
   getCategoryProducts,
-} = require("../controllers/admin.controller");
-const {
+} from "../controllers/admin.controller.js";
+import {
   createOrder,
   getOrders,
   loginWorker,
-} = require("../controllers/worker.controller");
+} from "../controllers/worker.controller.js";
 
 router.post("/login", kitchenDbMiddleware, loginWorker);
 
@@ -29,4 +29,4 @@ router.get("/tables", getTables);
 router.get("/categories", getCategories);
 router.get("/categories/:categoryId/products", getCategoryProducts);
 
-module.exports = router;
+export default router;

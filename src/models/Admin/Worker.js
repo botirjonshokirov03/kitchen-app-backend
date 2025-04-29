@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+import mongoose from "mongoose";
 
 const CheckInSchema = new mongoose.Schema({
   checkInTime: { type: Date, required: true },
@@ -16,4 +16,4 @@ const WorkerSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-module.exports = WorkerSchema;
+export default WorkerSchema;

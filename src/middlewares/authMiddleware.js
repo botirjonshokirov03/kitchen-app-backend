@@ -1,4 +1,4 @@
-const jwt = require("jsonwebtoken");
+import jwt from "jsonwebtoken";
 
 // Protect SuperAdmin routes
 const protectSuperAdmin = (req, res, next) => {
@@ -86,4 +86,4 @@ const protectWorker = (req, res, next) => {
   }
 };
 
-module.exports = { protectSuperAdmin, protectAdmin, protectWorker };
+export { protectSuperAdmin, protectAdmin, protectWorker };

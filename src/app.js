@@ -1,14 +1,15 @@
-const express = require("express");
-const dotenv = require("dotenv");
-const cors = require("cors");
-const connectDB = require("./config/dbConnection");
+import express from "express";
+import dotenv from "dotenv";
+import cors from "cors";
+import connectDB from "./config/dbConnection.js";
 
-const superAdminRoutes = require("./routes/superAdmin.routes");
-const adminRoutes = require("./routes/admin.routes");
-const workerRoutes = require("./routes/worker.routes");
-const workTrackRoutes = require("./routes/workTrack.routes");
+import superAdminRoutes from "./routes/superAdmin.routes.js";
+import adminRoutes from "./routes/admin.routes.js";
+import workerRoutes from "./routes/worker.routes.js";
+import workTrackRoutes from "./routes/workTrack.routes.js";
 
 dotenv.config();
+
 const app = express();
 const PORT = process.env.PORT || 5000;
 
@@ -27,6 +28,11 @@ app.get("/", (req, res) => {
   res.send("API is running...");
 });
 
-app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
-});
+// 🚀 Only start server if not testing
+if (process.env.NODE_ENV !== "test") {
+  app.listen(PORT, () => {
+    console.log(`Server running on port ${PORT}`);
+  });
+}
+
+export { app };

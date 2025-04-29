@@ -1,6 +1,6 @@
-const express = require("express");
+import express from "express";
 const router = express.Router();
-const {
+import {
   loginAdmin,
   createCategory,
   getCategories,
@@ -12,10 +12,10 @@ const {
   createTable,
   getTables,
   calculateWorkingHours,
-} = require("../controllers/admin.controller");
+} from "../controllers/admin.controller.js";
 
-const { protectAdmin } = require("../middlewares/authMiddleware");
-const { kitchenDbMiddleware } = require("../middlewares/kitchenMiddleware");
+import { protectAdmin } from "../middlewares/authMiddleware.js";
+import { kitchenDbMiddleware } from "../middlewares/kitchenMiddleware.js";
 
 // Admin login
 router.post("/login", loginAdmin);
@@ -40,4 +40,4 @@ router.get("/tables", getTables);
 
 router.get("/workers/:username/working-hours", calculateWorkingHours);
 
-module.exports = router;
+export default router;

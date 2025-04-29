@@ -1,6 +1,6 @@
-const bcrypt = require("bcryptjs");
-const jwt = require("jsonwebtoken");
-const { generateToken } = require("../utils/generateToken");
+import bcrypt from "bcryptjs";
+import { generateToken } from "../utils/generateToken.js";
+import Admin from "../models/SuperAdmin/Admin.js";
 
 // These will be injected dynamically by kitchenMiddleware
 let Category;
@@ -11,7 +11,6 @@ let Table;
 
 const loginAdmin = async (req, res) => {
   const { email, password } = req.body;
-  const Admin = require("../models/SuperAdmin/Admin");
 
   const admin = await Admin.findOne({ email });
   if (!admin) {
@@ -188,7 +187,7 @@ const calculateWorkingHours = async (req, res) => {
   });
 };
 
-module.exports = {
+export {
   loginAdmin,
   createCategory,
   getCategories,

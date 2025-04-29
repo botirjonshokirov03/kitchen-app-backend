@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+import mongoose from "mongoose";
 
 const KitchenSchema = new mongoose.Schema(
   {
@@ -10,5 +10,4 @@ const KitchenSchema = new mongoose.Schema(
   },
   { timestamps: true }
 );
-
-module.exports = mongoose.model("Kitchen", KitchenSchema);
+export default mongoose.model("Kitchen", KitchenSchema);

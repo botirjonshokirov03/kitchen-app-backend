@@ -1,9 +1,9 @@
-const mongoose = require("mongoose");
-const CategorySchema = require("../models/Admin/Category");
-const ProductSchema = require("../models/Admin/Product");
-const WorkerSchema = require("../models/Admin/Worker");
-const TableSchema = require("../models/Admin/Table");
-const OrderSchema = require("../models/Admin/Order");
+import mongoose from "mongoose";
+import CategorySchema from "../models/Admin/Category.js";
+import ProductSchema from "../models/Admin/Product.js";
+import WorkerSchema from "../models/Admin/Worker.js";
+import TableSchema from "../models/Admin/Table.js";
+import OrderSchema from "../models/Admin/Order.js";
 
 const connections = {}; // Cache all dynamic connections
 
@@ -37,4 +37,4 @@ const getKitchenDbConnection = async (kitchenId) => {
   return conn;
 };
 
-module.exports = { getKitchenDbConnection };
+export { getKitchenDbConnection };
